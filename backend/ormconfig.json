@@ -1,0 +1,22 @@
+[
+  {
+    "type": "mysql",
+    "host": "crypto-mysql",
+    "port": 3306,
+    "username": "root",
+    "password": "rootpasswordhere",
+    "database": "cryptodb",
+    "migrationsTableName": "custom_migration_table",
+    "entities": [
+      "dist/modules/**/*.entity.{ts,js}"
+    ],
+    "migrations": [
+      "dist/migrations/**/*.{ts,js}"
+    ],
+    "cli": {
+      "entitiesDir": "src/modules",
+      "migrationsDir": "src/migrations"
+    },
+    "synchronize": true
+  }
+]

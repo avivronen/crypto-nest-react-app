@@ -1,0 +1,55 @@
+version: '3.7'
+services:
+
+  redis:
+    image: redis:alpine
+    container_name: crypto-redis
+
+  mysql:
+    image: mysql:8.0
+    container_name: crypto-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    working_dir: /application
+    volumes:
+      - .:/application
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpasswordhere
+      - MYSQL_DATABASE=cryptodb
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=app
+    ports:
+      - "3309:3306"
+
+  react:
+    build: ./docker/npreactdocker
+    container_name: crypto-react
+    working_dir: /application
+    command: npm run start
+    restart: always
+    volumes:
+      - ./front/crypto-app:/application
+    ports:
+      - "3005:3005"
+
+  nest1:
+    container_name: crypto-nest1
+    build: ./docker/nestdocker
+    restart: always
+    volumes:
+      - ./backend:/application
+      #- /application/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm run start:dev
+    env_file:
+      - ./docker/.env
+    depends_on:
+      - redis
+      - mysql
+
+
+  # docker exec -it crypto-nest1 sh
+  # docker exec -it crypto-react sh
+  # npm run typeorm migration:run

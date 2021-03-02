@@ -1,0 +1,8 @@
+*/node_modules/*
+/node_modules/*
+.idea/*
+*/.idea
+.idea/*
+
+./backend/node_modules/*
+./front/crypto-app/node_modules/*
