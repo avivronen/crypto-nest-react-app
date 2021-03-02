@@ -40,6 +40,4 @@ export class QuotesController {
     async getCurrencies(): Promise<typeof QuotesCryptoTypesEnum> {
         return QuotesCryptoTypesEnum;
     }
-
-
 }
